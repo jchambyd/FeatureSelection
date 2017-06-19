@@ -29,10 +29,5 @@ public class FeatureSelection {
 		{
 			e.printStackTrace();
 		}
-	}
-	
-	
-	
-	
-	
+	}	
 }
