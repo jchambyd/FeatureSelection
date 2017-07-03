@@ -59,7 +59,7 @@ public class ProblemAnalyzer {
 		 for(int i=0;i<numAttrs;i++)
 		 {
 		 	/* Calculating Symmetrical Uncertainty with respect to the class */
-		 	suList[i]=suListDup[i]=SU(i,numAttrs);	
+		 	suList[i] = suListDup[i] = SU(i, numAttrs);	
 		 	if(suList[i] > delta)
 		 		len++;
 		 }
@@ -69,18 +69,19 @@ public class ProblemAnalyzer {
 		 
 		 double max;
 		 int maxIndex;
-		 for(int i=0;i<len;i++)
+		 for(int i=0; i<len; i++)
 		 {
 		 	max=0;
 		 	maxIndex = -1;
 		 	
-		 	for(int j=0;j<numAttrs;j++)
-		 	if(suListDup[j] > max)
-		 	{
-		 		max=suListDup[j];
-		 		maxIndex=j;
-		 	}
-		 	
+		 	for(int j = 0; j < numAttrs; j++)
+			{
+				if(suListDup[j] > max)
+				{
+					max = suListDup[j];
+					maxIndex=j;
+				}
+			}
 		 	suOrder[i]=maxIndex;
 		 	suListDup[maxIndex] =(double)0; /* Removing the max element in order to get the next 
 		 										maximum element in the next iteration */
@@ -94,21 +95,21 @@ public class ProblemAnalyzer {
 		 	
 		 int fp,fq,fqd;
 		 
-		 fp=suOrder[0];	/* The feature with the highest SU value with respect to the class */
+		 fp = suOrder[0];	/* The feature with the highest SU value with respect to the class */
 		 
 		 while(fp != -1)
 		 {
-		 	fq=getNextElement(fp,len);
+		 	fq = getNextElement(fp, len);
 		 	
 		 	if(fq!=-1)
 		 	{
 		 		while(true)
 		 		{
 		 			fqd=fq;
-		 			if( SU(fp,fq) >= suList[fq] )
+		 			if( SU(fp, fq) >= suList[fq] )
 		 			{
-		 				setInvalid(fq,len); // i.e valid[fq]=0
-		 				fq=getNextElement(fqd,len);
+		 				setInvalid(fq, len); // i.e valid[fq]=0
+		 				fq = getNextElement(fqd,len);
 		 			}
 		 			else
 		 				fq = getNextElement(fq,len);
@@ -134,7 +135,7 @@ public class ProblemAnalyzer {
 	 * @param len
 	 * @return Returns the next valid attribute index, or -1 if there are none. 
 	 */
-	private int getNextElement(int fp,int len)
+	private int getNextElement(int fp, int len)
 	{
 		int fpIndex=0;
 		
@@ -179,12 +180,12 @@ public class ProblemAnalyzer {
 	{
 		double ans=0,temp;
 		
-		MetaStructure curIndex=(MetaStructure)RD.MD.elementAt(attrIndex);
+		MetaStructure curIndex = (MetaStructure)RD.MD.elementAt(attrIndex);
 		
-		for(short i=0; i<(short)curIndex.numValues;i++)
+		for(short i=0; i < (short)curIndex.numValues;i++)
 		{
-			temp=partialProb(attrIndex,i);
-			if(temp!=(double)0)
+			temp = partialProb(attrIndex,i);
+			if(temp != (double) 0)
 				ans+= temp *(Math.log(temp)/Math.log((double)2.0));
 		}
 		return -ans;
@@ -201,7 +202,7 @@ public class ProblemAnalyzer {
 	{
 		int count=0;
 		
-		for(int i=0;i<DH.numInstances;i++)
+		for(int i = 0; i < DH.numInstances; i++)
 			if(DH.data[i][attrIndex] == attrValue)
 				count++;
 				
@@ -227,7 +228,7 @@ public class ProblemAnalyzer {
 		
 		for(short j=0;j<(short)twoMS.numValues;j++)
 		{
-			temp=partialProb(indexTwo,j);
+			temp = partialProb(indexTwo, j);
 			temp_ans=0;
 			
 			for(short i=0;i<(short)oneMS.numValues;i++)
@@ -280,7 +281,7 @@ public class ProblemAnalyzer {
 	 */
 	double informationGain(int indexOne,int indexTwo)
 	{
-		return entropy(indexOne) - condEntropy(indexOne,indexTwo);
+		return entropy(indexOne) - condEntropy(indexOne, indexTwo);
 	}
 	
 	/**
@@ -291,13 +292,13 @@ public class ProblemAnalyzer {
 	 * @param indexTwo Feature Two
 	 * @return Returns Symmetrical Uncertainty
 	 */
-	double SU(int indexOne,int indexTwo)
+	double SU(int indexOne, int indexTwo)
 	{
 		double ig,e1,e2,ans;
 		
-		ig=informationGain(indexOne,indexTwo);
-		e1=entropy(indexOne);
-		e2=entropy(indexTwo);
+		ig = informationGain(indexOne, indexTwo);
+		e1 = entropy(indexOne);
+		e2 = entropy(indexTwo);
 		
 		if((e1+e2) !=(double)0)
 			return((double)2 * (ig/(e1+e2)));

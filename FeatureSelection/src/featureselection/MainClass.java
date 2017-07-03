@@ -12,28 +12,15 @@ package featureselection;
 public class MainClass {
 
 	public static void main(String[] args) {
-		
-				if(args.length < 1 )
-				{
-					System.out.println("Usage: java featureselector.fcbf.MainClass 'stem' <delta> ");
-					System.exit(1);
-				}
 				
-				String descriptor = new String(args[0]+".rc");
-				ResourceDescriptor RD = new ResourceDescriptor(descriptor);
-		
-				String holder = new String(args[0] + ".data");
-				DataHolder DH = new DataHolder(holder);
-				DH.convertDataFormat(RD);
-				
-				ProblemAnalyzer PA =new ProblemAnalyzer(RD,DH);
-				if(args.length == 2)
-					PA.fcbf(Double.parseDouble(args[1]));
-				else
-				if(args.length == 1)				
-					PA.fcbf(0);	/* delta = 0 */
-				else
-					System.out.println("Error in usage.");
-				
+		String descriptor = new String("data/lc.rc");
+		ResourceDescriptor RD = new ResourceDescriptor(descriptor);
+
+		String holder = new String("data/lc.data");
+		DataHolder DH = new DataHolder(holder);
+		DH.convertDataFormat(RD);
+
+		ProblemAnalyzer PA =new ProblemAnalyzer(RD,DH);
+		PA.fcbf(0);	/* delta = 0 */				
 	}
 }
