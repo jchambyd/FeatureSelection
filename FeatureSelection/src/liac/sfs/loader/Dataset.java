@@ -1,7 +1,6 @@
-package featureselection;
+package liac.sfs.loader;
 
 import org.ejml.simple.SimpleMatrix;
-
 import weka.core.Instances;
 
 public class Dataset

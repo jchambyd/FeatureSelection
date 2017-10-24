@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package featureselection;
+package liac.sfs.loader;
 
 import org.ejml.simple.SimpleMatrix;
 
@@ -120,5 +120,20 @@ public class MatrixUtil
 				data[i][j] = m.get(i, j);
 
 		return data;	
+	}
+	
+	public static SimpleMatrix getCorrelationMatrix(SimpleMatrix cov)
+	{
+		int numAtrib = cov.numCols();
+		SimpleMatrix invDiag = new SimpleMatrix(numAtrib, numAtrib);
+		
+		//Calculating inverse the diagonal matrix of covariance matrix (sqrt)
+		for (int i = 0; i < numAtrib; i++) 
+			invDiag.set(i, i, 1.0 / Math.sqrt(Math.abs(Double.MIN_VALUE + cov.get(i, i))));
+		
+		//Calculating correlation matrix
+		SimpleMatrix corrMat = invDiag.mult(cov).mult(invDiag);
+		
+		return corrMat;
 	}
 }
